@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================== */
+        /* الستايل العام والتصميم الكريمي الفخم */
+        /* ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Cairo', sans-serif;
+            background: #f8f6f2;
+        }
+
+        /* الصفحات */
+        section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #page2, #page3 {
+            display: none;
+        }
+
+        /* الصفحة الأولى */
+        #page1 {
+            background: #f8f6f2;
+        }
+
+        /* الباب */
+        .doors {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .door {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(180deg, #ffffff, #f3efe9);
+            position: relative;
+            transition: 3.5s ease;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, .08);
+        }
+
+        /* زخرفة الباب */
+        .doorFrame {
+            position: absolute;
+            top: 8%;
+            left: 8%;
+            width: 84%;
+            height: 84%;
+            border: 6px solid #ece7df;
+            box-shadow: inset 0 0 0 2px #fff, 0 0 10px rgba(0, 0, 0, .03);
+        }
+
+        /* الفيونكة */
+        .bow {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
+
+        .leftRibbon, .rightRibbon {
+            width: 120px;
+            height: 90px;
+            background: white;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, .12);
+            position: absolute;
+        }
+
+        .leftRibbon {
+            right: 20px;
+            clip-path: polygon(0 50%, 100% 0, 100% 100%);
+        }
+
+        .rightRibbon {
+            left: 20px;
+            clip-path: polygon(0 0, 100% 50%, 0 100%);
+        }
+
+        .centerRibbon {
+            width: 38px;
+            height: 38px;
+            background: #ddd4c3;
+            border-radius: 50%;
+            position: absolute;
+            left: -19px;
+            top: 26px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, .15);
+        }
+
+        /* مؤثرات الإضاءة والجزيئات */
+        #lightBeam {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, .95), rgba(255, 255, 255, .2), transparent);
+            opacity: 0;
+            z-index: 5;
+            transition: 2s;
+        }
+
+        #goldParticles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d4b06a;
+            box-shadow: 0 0 10px #d4b06a;
+            animation: floatGold 4s linear forwards;
+        }
+
+        @keyframes floatGold {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(.3);
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-500px) scale(1.2);
+            }
+        }
+
+        /* ==================== الصفحة الثانية ==================== */
+        #page2 {
+            background: linear-gradient(#fbfaf7, #f2eee7);
+            transition: opacity 1.2s ease;
+        }
+
+        .hall {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: radial-gradient(circle, #ffffff, #f4f0ea);
+        }
+
+        .logo {
+            font-size: 180px;
+            font-weight: bold;
+            color: #b6a37d;
+            font-family: 'Times New Roman';
+            opacity: 0;
+            transform: scale(.7);
+            transition: 2s;
+        }
+
+        .date {
+            margin-top: 30px;
+            font-size: 38px;
+            letter-spacing: 8px;
+            color: #8d7a56;
+            opacity: 0;
+            transition: 2s;
+        }
+
+        /* ==================== الصفحة الثالثة (تطابق كامل للفيديو) ==================== */
+        #page3 {
+            background: radial-gradient(circle, #ffffff 30%, #f4f0ea 100%);
+        }
+
+        .card {
+            width: 90%;
+            max-width: 450px;
+            height: 92%;
+            background: transparent;
+            padding: 20px 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            animation: cardAppear 2s ease forwards;
+        }
+
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* إخفاء النصوص المبدئي للتأثير المتتالي */
+        #page3 h1, #page3 p, #page3 .parents-row, #page3 .couple-names, #page3 .info-grid, #page3 h3 {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: 1.2s ease;
+        }
+
+        h1#b1 {
+            font-family: 'Amiri', serif;
+            font-size: 24px;
+            color: #7a6851;
+            margin-top: 10px;
+        }
+
+        p#b2 {
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #7a6851;
+            padding: 0 10px;
+        }
+
+        p#b3 {
+            font-size: 16px;
+            color: #7a6851;
+            margin-top: 5px;
+        }
+
+        /* صف أولياء الأمور المتوازي المماثل للصورة */
+        .parents-row {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            font-size: 14px;
+            color: #7a6851;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .parent-block {
+            width: 45%;
+        }
+
+        p#b7 {
+            font-size: 16px;
+            color: #7a6851;
+        }
+
+        /* أسماء العرسان الكلاسيكية الفخمة (حمزة & أسيل) */
+        .couple-names {
+            font-family: 'Amiri', serif;
+            font-size: 38px;
+            color: #8d7a56;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+            text-shadow: 0 0 1px rgba(141,122,86,0.2);
+        }
+
+        p#b11_5 {
+            font-size: 15px;
+            color: #7a6851;
+        }
+
+        /* شبكة تفاصيل الموعد والموقع السفلية المتوازية بدقة */
+        .info-grid {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            border-top: 1px solid #e0d6c5;
+            border-bottom: 1px solid #e0d6c5;
+            padding: 10px 0;
+            margin: 15px 0;
+        }
+
+        .info-column {
+            width: 33%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #7a6851;
+            line-height: 1.5;
+        }
+
+        .info-column .icon {
+            font-size: 18px;
+            margin-bottom: 4px;
+            color: #8d7a56;
+        }
+
+        .info-column strong {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        p#b12 {
+            font-size: 14px;
+            color: #8a765d;
+        }
+
+        /* عبارة الختام الفاخرة العريضة المزخرفة */
+        h3#b13 {
+            font-family: 'Amiri', serif;
+            font-size: 22px;
+            color: #8d7a56;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="page1">
+        <div class="doors">
+            <div class="door leftDoor">
+                <div class="doorFrame"></div>
+            </div>
+            <div class="door rightDoor">
+                <div class="doorFrame"></div>
+            </div>
+            <div class="bow">
+                <div class="leftRibbon"></div>
+                <div class="centerRibbon"></div>
+                <div class="rightRibbon"></div>
+            </div>
+        </div>
+        <div id="lightBeam"></div>
+        <div id="goldParticles"></div>
+    </section>
+
+    <section id="page2">
+        <div class="hall">
+            <div class="logo">R</div>
+            <div class="date">06 • MAY • 2026</div>
+        </div>
+    </section>
+
+    <section id="page3">
+        <div class="card">
+            <h1 id="b1">بسم الله الرحمن الرحيم</h1>
+            
+            <p id="b2">{ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ }</p>
+            
+            <p id="b3">بكل مشاعر مودة و حب يتشرف</p>
+            
+            <div class="parents-row" id="parentsBlock">
+                <div class="parent-block">
+                  الممرضة<br><strong>بن حملة وفاء ياسمين</strong>
+                </div>
+                <div style="align-self: center; font-weight: bold;">و</div>
+                <div class="parent-block">
+                 مدير الاعمال<br><strong> بياض مروان</strong>
+                </div>
+            </div>
+            
+            <p id="b7">بدعوتكم لحضور حفل زفاف</p>
+            
+            <div class="couple-names" id="namesBlock">
+                <span>ياسمين</span>
+                <span style="font-size: 26px; color: #7a6851;">&</span>
+                <span>مروان</span>
+            </div>
+            
+            <p id="b11_5">وذلك بمشيئة الله تعالى</p>
+            
+            <div class="info-grid" id="gridBlock">
+                <div class="info-column">
+                    <span class="icon">📍</span>
+                    <strong>قاعات</strong>
+                    <span>مؤتة للاحتفالات</span>
+                </div>
+                <div class="info-column" style="border-left: 1px solid #e0d6c5; border-right: 1px solid #e0d6c5;">
+                    <span class="icon">🕒</span>
+                    <strong>8:00 - 11:00</strong>
+                    <span>مساءً</span>
+                </div>
+                <div class="info-column">
+                    <span class="icon">📅</span>
+                    <strong>06.05.2026</strong>
+                    <span>يوم السبت</span>
+                </div>
+            </div>
+            
+            <p id="b12">يمنع اصطحاب الأطفال</p>
+            
+            <h3 id="b13">وبحضوركم يتم الفرح والسرور</h3>
+        </div>
+    </section>
+
+    <script>
+        const page1 = document.getElementById("page1");
+        const page2 = document.getElementById("page2");
+        const page3 = document.getElementById("page3");
+
+        const leftDoor = document.querySelector(".leftDoor");
+        const rightDoor = document.querySelector(".rightDoor");
+        const bow = document.querySelector(".bow");
+
+        const logo = document.querySelector(".logo");
+        const date = document.querySelector(".date");
+
+        // تشغيل البداية بعد ثانيتين تلقائياً
+        setTimeout(openDoors, 2000);
+
+        function openDoors() {
+            bow.style.transition = "1s";
+            bow.style.opacity = "0";
+            bow.style.transform = "translate(-50%, -50%) scale(.6)";
+
+            leftDoor.style.transform = "translateX(-100%)";
+            rightDoor.style.transform = "translateX(100%)";
+
+            const light = document.getElementById("lightBeam");
+            if(light) {
+                light.style.opacity = "1";
+                light.style.width = "350px";
+            }
+            createGoldParticles();
+
+            setTimeout(showHall, 3500);
+        }
+
+        function createGoldParticles() {
+            const container = document.getElementById("goldParticles");
+            if(!container) return;
+            for (let i = 0; i < 60; i++) {
+                let p = document.createElement("div");
+                p.className = "particle";
+                p.style.left = Math.random() * 100 + "%";
+                p.style.top = (70 + Math.random() * 30) + "%";
+                p.style.animationDelay = (Math.random() * 2) + "s";
+                container.appendChild(p);
+            }
+        }
+
+        function showHall() {
+            page1.style.display = "none";
+            page2.style.display = "flex";
+
+            setTimeout(() => {
+                logo.style.opacity = "1";
+                logo.style.transform = "scale(1)";
+            }, 600);
+
+            setTimeout(() => {
+                date.style.opacity = "1";
+            }, 2500);
+
+            setTimeout(showInvitation, 6500);
+        }
+
+        function showInvitation() {
+            page2.style.opacity = "0";
+
+            setTimeout(() => {
+                page2.style.display = "none";
+                page3.style.display = "flex";
+                
+                setTimeout(() => {
+                    startLuxuryInvitation();
+                }, 600);
+
+            }, 1200);
+        }
+
+        // تحريك تدرج ناعم للمجموعات والنصوص الموحدة
+        function fadeInElement(el, next) {
+            if (!el) { if (next) next(); return; }
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+            setTimeout(() => {
+                if (next) next();
+            }, 1600); // الفاصل الزمني المريح بين ظهور الفقرات
+        }
+
+        // تسلسل الكتابة والظهور المتتابع لفقرات الكارت الثالث المتناسق
+        function startLuxuryInvitation() {
+            fadeInElement(document.getElementById("b1"), function() {
+                fadeInElement(document.getElementById("b2"), function() {
+                    fadeInElement(document.getElementById("b3"), function() {
+                        fadeInElement(document.getElementById("parentsBlock"), function() {
+                            fadeInElement(document.getElementById("b7"), function() {
+                                fadeInElement(document.getElementById("namesBlock"), function() {
+                                    fadeInElement(document.getElementById("b11_5"), function() {
+                                        fadeInElement(document.getElementById("gridBlock"), function() {
+                                            fadeInElement(document.getElementById("b12"), function() {
+                                                fadeInElement(document.getElementById("b13"));
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
