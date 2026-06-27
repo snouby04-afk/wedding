@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Cairo', sans-serif;
+            background: #f8f6f2;
+        }
+
+        section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #page2, #page3 {
+            display: none;
+        }
+
+        /* ==================== الصفحة الأولى (الأبواب والختم) ==================== */
+        #page1 {
+            background: #f5f1ea;
+            cursor: pointer;
+        }
+
+        .doors {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .door {
+            width: 50%;
+            height: 100%;
+            background-color: #f4f0e6;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 0);
+            background-size: 24px 24px;
+            position: relative;
+            transition: 3s cubic-bezier(0.7, 0, 0.3, 1);
+            box-shadow: inset 0 0 40px rgba(138, 120, 93, 0.12);
+        }
+
+        .leftDoor { border-left: 1px solid rgba(182, 163, 125, 0.25); }
+        .rightDoor { border-right: 1px solid rgba(182, 163, 125, 0.25); }
+
+        .envelope-seal {
+            position: absolute;
+            left: 50%;
+            top: 48%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            width: 145px;
+            height: 145px;
+            transition: 1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+        }
+
+        .open-text {
+            position: absolute;
+            left: 50%;
+            top: 62%;
+            transform: translateX(-50%);
+            z-index: 20;
+            font-family: 'Amiri', serif;
+            font-size: 20px;
+            color: #735d43;
+            white-space: nowrap;
+            border-bottom: 1.5px solid #735d43;
+            padding-bottom: 2px;
+            transition: 0.8s ease;
+        }
+
+        #lightBeam {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, .95), rgba(255, 255, 255, .2), transparent);
+            opacity: 0;
+            z-index: 5;
+            transition: 2s;
+        }
+
+        #goldParticles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #cdb48f;
+            box-shadow: 0 0 8px #cdb48f;
+            animation: floatGold 3.5s linear forwards;
+        }
+
+        @keyframes floatGold {
+            0% { opacity: 0; transform: translateY(50px) scale(.3); }
+            20% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-400px) scale(1.2); }
+        }
+
+        /* ==================== الصفحة الثانية ==================== */
+        #page2 {
+            background: #fdfbf7;
+            position: relative;
+            transition: opacity 1.2s ease;
+        }
+
+        .classic-arch-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: 
+                radial-gradient(circle at 100% 40%, rgba(255,255,255,0.85) 0%, transparent 60%),
+                linear-gradient(135deg, #fbf9f4 0%, #f3ede2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .arch-structure {
+            position: absolute;
+            width: 85%;
+            max-width: 500px;
+            height: 85%;
+            border: 10px solid #ffffff;
+            border-bottom: none;
+            border-radius: 250px 250px 0 0;
+            box-shadow: 
+                0px 20px 45px rgba(165, 150, 127, 0.12),
+                inset 0px 5px 25px rgba(0, 0, 0, 0.01);
+            background: linear-gradient(to bottom, #faf8f5 0%, #f7f2e7 100%);
+        }
+
+        .hall-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .calligraphy-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin-bottom: 5px;
+            opacity: 0;
+            transform: translateY(25px) scale(0.95);
+            transition: 2.8s cubic-bezier(0.1, 0.8, 0.3, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .date-vintage {
+            font-family: 'Cinzel', sans-serif;
+            font-size: 15px;
+            letter-spacing: 5px;
+            color: #a4937a;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            transition: 2s ease;
+            white-space: nowrap;
+            margin-top: 8px;
+        }
+
+        /* ==================== الصفحة الثالثة (إطار الجبس المحفور الملكي) ==================== */
+        #page3 {
+            background: #f2ede4;
+            position: relative;
+        }
+
+        /* حاوية خلفية الجبس */
+        .gypsum-frame-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* محاكاة إطار كرتوني بارز دافئ للعمق العام */
+        .gypsum-base-layer {
+            position: absolute;
+            top: 15px;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            background: #fbf9f6;
+            border-radius: 12px;
+            box-shadow: 
+                inset 0 0 40px rgba(115, 93, 67, 0.06),
+                0 10px 30px rgba(0, 0, 0, 0.04);
+            border: 4px solid #ffffff;
+        }
+
+        /* مساحة نص الدعوة المرفوعة فوق الجبس الشفاف والمقروء */
+        .card {
+            width: 82%;
+            max-width: 420px;
+            height: 84%;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0px 15px 35px rgba(138, 120, 93, 0.08);
+            padding: 30px 22px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 5;
+            border-radius: 8px;
+        }
+
+        .card-inner-border {
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            border: 1px dashed rgba(145, 128, 103, 0.2);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        #page3 h1, #page3 p, #page3 .parents-row, #page3 .couple-names, #page3 .info-grid, #page3 h3 {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        h1#b1 { font-family: 'Amiri', serif; font-size: 22px; color: #4a3b2c; font-weight: bold; text-shadow: 0 1px 1px #fff; }
+        p#b2 { font-family: 'Amiri', serif; font-size: 14px; line-height: 1.7; color: #544333; padding: 0 5px; text-shadow: 0 1px 1px #fff; }
+        p#b3 { font-size: 15px; color: #544333; font-weight: bold; }
+
+        .parents-row {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            font-size: 13px;
+            color: #544333;
+            line-height: 1.6;
+        }
+        .parent-block { width: 45%; }
+        p#b7 { font-size: 15px; color: #544333; font-weight: bold; }
+
+        .couple-names {
+            font-family: 'Amiri', serif;
+            font-size: 38px;
+            color: #735d43;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 0 1px 1px #fff;
+        }
+
+        p#b11_5 { font-size: 14px; color: #544333; }
+
+        .info-grid {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            border-top: 1px solid rgba(115, 93, 67, 0.15);
+            border-bottom: 1px solid rgba(115, 93, 67, 0.15);
+            padding: 10px 0;
+            background: rgba(255,255,255,0.4);
+        }
+
+        .info-column {
+            width: 33%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            color: #544333;
+            line-height: 1.5;
+        }
+        .info-column .icon { font-size: 16px; margin-bottom: 2px; color: #735d43; }
+        .info-column strong { font-weight: 700; font-size: 12px; color: #3b2f23; }
+
+        p#b12 { font-size: 13px; color: #735d43; font-weight: bold; }
+        h3#b13 { font-family: 'Amiri', serif; font-size: 20px; color: #735d43; font-weight: bold; }
+    </style>
+</head>
+
+<body>
+
+    <section id="page1" onclick="openEnvelope()">
+        <div class="doors">
+            <div class="door leftDoor"></div>
+            <div class="door rightDoor"></div>
+            
+            <div class="envelope-seal" id="seal">
+                <svg viewBox="0 0 100 100" style="width:100%; height:100%; filter: drop-shadow(0px 6px 10px rgba(115, 93, 67, 0.3));">
+                    <defs>
+                        <radialGradient id="royalWax" cx="50%" cy="50%" r="50%" fx="35%" fy="35%">
+                            <stop offset="0%" stop-color="#dfba8c"/>
+                            <stop offset="60%" stop-color="#b08a59"/>
+                            <stop offset="90%" stop-color="#8a6537"/>
+                            <stop offset="100%" stop-color="#694a24"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M51 6 C68 4, 88 12, 93 34 C97 54, 94 76, 78 89 C62 101, 34 94, 19 82 C5 70, 3 48, 8 31 C13 14, 32 8, 51 6 Z" fill="url(#royalWax)"/>
+                    <circle cx="50" cy="51" r="32" fill="none" stroke="#694a24" stroke-width="1.2" opacity="0.25"/>
+                    <circle cx="50" cy="51" r="30" fill="url(#royalWax)"/>
+                    
+                    <g fill="#fffdfa" font-family="'Cinzel', serif" font-weight="bold" text-anchor="middle" filter="drop-shadow(0px 1px 2px rgba(0,0,0,0.3))">
+                        <text x="38" y="59" font-size="25">Y</text>
+                        <text x="62" y="59" font-size="25">M</text>
+                        <path d="M 40,46 Q 50,51 60,46" stroke="#fffdfa" stroke-width="1.5" fill="none" opacity="0.85"/>
+                    </g>
+                </svg>
+            </div>
+            
+            <div class="open-text" id="openTxt">اضغط هنا لفتح الظرف</div>
+        </div>
+        <div id="lightBeam"></div>
+        <div id="goldParticles"></div>
+    </section>
+
+    <section id="page2">
+        <div class="classic-arch-bg">
+            <div class="arch-structure"></div>
+        </div>
+        
+        <div class="hall-content">
+            <div class="calligraphy-container" id="calligraphyContainer">
+                <svg viewBox="0 0 150 150" style="width: 100%; height: 100%;">
+                    <defs>
+                        <linearGradient id="calligraphyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#b8a68a" />
+                            <stop offset="100%" stop-color="#918067" />
+                        </linearGradient>
+                    </defs>
+                    <g fill="url(#calligraphyGrad)" filter="drop-shadow(0px 2px 3px rgba(0,0,0,0.06))">
+                        <path d="M73,20 C68,32 58,45 58,58 C58,75 66,90 66,105 C66,118 61,126 53,132 C65,124 72,112 72,98 C72,82 63,68 64,52 C65,38 71,28 73,20 Z" />
+                        <path d="M75,32 C78,45 84,55 88,68 C92,80 93,92 88,102 C82,114 70,122 58,126 C74,120 84,110 88,96 C91,84 88,72 84,60 C80,48 76,38 75,32 Z" />
+                        <path d="M53,62 C50,62 48,64 48,67 C48,72 56,76 61,72 C58,70 55,62 53,62 Z" />
+                        <path d="M48,52 C52,50 55,47 55,43 C51,44 46,48 48,52 Z" />
+                    </g>
+                </svg>
+            </div>
+            <div class="date-vintage" id="dateText">21 • November • 2026</div>
+        </div>
+    </section>
+
+    <section id="page3">
+        <div class="gypsum-frame-container">
+            <div class="gypsum-base-layer"></div>
+            
+            <svg width="100%" height="100%" style="position:absolute; top:0; left:0; z-index:2;">
+                <defs>
+                    <filter id="gypsum-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#5c4f41" flood-opacity="0.12"/>
+                        <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#ffffff" flood-opacity="0.9" result="glow"/>
+                    </filter>
+                    
+                    <g id="gypsum-corner">
+                        <path d="M 0,40 Q 25,35 35,10 Q 25,25 0,25 Z" fill="#ffffff" filter="url(#gypsum-shadow)"/>
+                        <path d="M 10,60 C 40,55 55,40 60,10 C 45,35 35,45 10,45 Z" fill="#fcfaf7" filter="url(#gypsum-shadow)"/>
+                        <circle cx="25" cy="25" r="7" fill="#ffffff" filter="url(#gypsum-shadow)"/>
+                        <circle cx="25" cy="25" r="4" fill="#f5f2eb"/>
+                        <path d="M 5,20 C 15,18 20,5 25,0 C 15,8 10,12 5,20 Z" fill="#ffffff"/>
+                    </g>
+
+                    <g id="gypsum-crown">
+                        <path d="M -70,0 C -40,25 -20,30 0,5 C 20,30 40,25 70,0 C 45,15 25,12 0,0 C -25,12 -45,15 -70,0 Z" fill="#ffffff" filter="url(#gypsum-shadow)"/>
+                        <path d="M -40,3 C -20,18 -10,22 0,2 C 10,22 20,18 40,3 C 25,10 15,8 0,0 C -15,8 -25,10 -40,3 Z" fill="#f6f3ed"/>
+                        <circle cx="0" cy="14" r="5" fill="#ffffff" filter="url(#gypsum-shadow)"/>
+                        <path d="M -20,5 Q 0,25 20,5" fill="none" stroke="#ffffff" stroke-width="3" filter="url(#gypsum-shadow)"/>
+                    </g>
+                </defs>
+
+                <use href="#gypsum-corner" x="25" y="25" transform="scale(1, 1)" />
+                <use href="#gypsum-corner" x="100%" y="25" transform="translate(-25, 0) scale(-1, 1)" />
+                <use href="#gypsum-corner" x="25" y="100%" transform="translate(0, -25) scale(1, -1)" />
+                <use href="#gypsum-corner" x="100%" y="100%" transform="translate(-25, -25) scale(-1, -1)" />
+
+                <use href="#gypsum-crown" x="50%" y="22" />
+                <use href="#gypsum-crown" x="50%" y="100%" transform="translate(0, -22) scale(1, -1)" />
+            </svg>
+        </div>
+
+        <div class="card">
+            <div class="card-inner-border"></div>
+            <h1 id="b1">بسم الله الرحمن الرحيم</h1>
+            <p id="b2">{ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ }</p>
+            <p id="b3">بكل مشاعر مودة و حب تتشرف</p>
+            
+            
+            <div class="parents-row" id="parentsBlock">
+                <div class="parent-block">
+                  الممرضة<br><strong>بن حملة وفاء ياسمين</strong>
+                </div>
+                <div style="align-self: center; font-weight: bold;">و</div>
+                <div class="parent-block">
+                 مدير الاعمال<br><strong> بياض مروان</strong>
+                </div>
+            </div>
+            
+            <p id="b7">بدعوتكم لحضور حفل زفاف</p>
+            
+            <div class="couple-names" id="namesBlock">
+                <span>ياسمين</span>
+                <span style="font-size: 26px; color: #7a6851;">&</span>
+                <span>مروان</span>
+            </div>
+            
+            <p id="b11_5">وذلك بمشيئة الله تعالى</p>
+            
+            <div class="info-grid" id="gridBlock">
+                <div class="info-column">
+                    <span class="icon">📍</span>
+                    <strong>قاعات</strong>
+                    <span>مؤتة للاحتفالات</span>
+                </div>
+                <div class="info-column" style="border-left: 1px solid rgba(115, 93, 67, 0.15); border-right: 1px solid rgba(115, 93, 67, 0.15);">
+                    <span class="icon">🕒</span>
+                    <strong>6:00 - 11:00</strong>
+                    <span>مساءً</span>
+                </div>
+                <div class="info-column">
+                    <span class="icon">📅</span>
+                    <strong>21.11.2027</strong>
+                    <span>يوم السبت</span>
+                </div>
+            </div>
+            
+            <p id="b12">يمنع اصطحاب الأطفال</p>
+            <h3 id="b13">وبحضوركم يتم الفرح والسرور</h3>
+        </div>
+    </section>
+
+    <script>
+        const page1 = document.getElementById("page1");
+        const page2 = document.getElementById("page2");
+        const page3 = document.getElementById("page3");
+
+        const leftDoor = document.querySelector(".leftDoor");
+        const rightDoor = document.querySelector(".rightDoor");
+        const seal = document.getElementById("seal");
+        const openTxt = document.getElementById("openTxt");
+
+        const calligraphyContainer = document.getElementById("calligraphyContainer");
+        const dateText = document.getElementById("dateText");
+
+        function openEnvelope() {
+            seal.style.opacity = "0";
+            seal.style.transform = "translate(-50%, -50%) scale(0.4)";
+            openTxt.style.opacity = "0";
+
+            leftDoor.style.transform = "translateX(-100%)";
+            rightDoor.style.transform = "translateX(100%)";
+
+            const light = document.getElementById("lightBeam");
+            if(light) {
+                light.style.opacity = "1";
+                light.style.width = "350px";
+            }
+            createGoldParticles();
+
+            setTimeout(showHall, 3000);
+        }
+
+        function createGoldParticles() {
+            const container = document.getElementById("goldParticles");
+            if(!container) return;
+            for (let i = 0; i < 50; i++) {
+                let p = document.createElement("div");
+                p.className = "particle";
+                p.style.left = Math.random() * 100 + "%";
+                p.style.top = (65 + Math.random() * 35) + "%";
+                p.style.animationDelay = (Math.random() * 1.5) + "s";
+                container.appendChild(p);
+            }
+        }
+
+        function showHall() {
+            page1.style.display = "none";
+            page2.style.display = "flex";
+
+            setTimeout(() => {
+                calligraphyContainer.style.opacity = "1";
+                calligraphyContainer.style.transform = "translateY(0) scale(1)";
+            }, 600);
+
+            setTimeout(() => {
+                dateText.style.opacity = "1";
+            }, 2500);
+
+            setTimeout(showInvitation, 6500);
+        }
+
+        function showInvitation() {
+            page2.style.opacity = "0";
+
+            setTimeout(() => {
+                page2.style.display = "none";
+                page3.style.display = "flex";
+                
+                setTimeout(() => {
+                    startLuxuryInvitation();
+                }, 600);
+
+            }, 1200);
+        }
+
+        function fadeInElement(el, next) {
+            if (!el) { if (next) next(); return; }
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+            setTimeout(() => {
+                if (next) next();
+            }, 1400);
+        }
+
+        function startLuxuryInvitation() {
+            fadeInElement(document.getElementById("b1"), function() {
+                fadeInElement(document.getElementById("b2"), function() {
+                    fadeInElement(document.getElementById("b3"), function() {
+                        fadeInElement(document.getElementById("parentsBlock"), function() {
+                            fadeInElement(document.getElementById("b7"), function() {
+                                fadeInElement(document.getElementById("namesBlock"), function() {
+                                    fadeInElement(document.getElementById("b11_5"), function() {
+                                        fadeInElement(document.getElementById("gridBlock"), function() {
+                                            fadeInElement(document.getElementById("b12"), function() {
+                                                fadeInElement(document.getElementById("b13"));
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
