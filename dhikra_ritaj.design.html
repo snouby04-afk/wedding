@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة خطوبة فيكتورية فاخرة - Dhikra Ritaj</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@200;300;400;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-cream: #f9f6f0;
+            --text-dark: #3a332a;
+            --antique-gold: #c5a880;
+            --soft-white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f1ede4;
+            font-family: 'Cairo', sans-serif;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .phone-stage {
+            position: relative;
+            width: 100%;
+            max-width: 415px;
+            height: 88vh;
+            max-height: 760px;
+            background-color: var(--bg-cream);
+            border-top-left-radius: 200px;
+            border-top-right-radius: 200px;
+            box-shadow: 0 25px 60px rgba(58, 51, 42, 0.1), 
+                        inset 0 0 0 14px var(--soft-white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 40px;
+        }
+
+        .victorian-frame {
+            position: absolute;
+            top: 25px; bottom: 25px; left: 25px; right: 25px;
+            border: 1px solid rgba(197, 168, 128, 0.35);
+            border-top-left-radius: 175px;
+            border-top-right-radius: 175px;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .victorian-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--antique-gold);
+            pointer-events: none;
+        }
+        .bottom-left { bottom: 0; left: 0; border-right: none; border-top: none; }
+        .bottom-right { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+        /* الشعار خلفية مائية متموضع في المنتصف تماماً وحجمه كبير */
+        .business-logo-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 2;
+            transition: opacity 1.2s ease, visibility 1.2s;
+        }
+
+        .scene.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide-up-anim {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1), opacity 1.2s ease;
+        }
+
+        .scene.active .slide-up-anim {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .delay-1 { transition-delay: 0.3s; }
+        .delay-2 { transition-delay: 0.6s; }
+
+        /* حاوية الخواتم المتداخلة الموحدة في كل الصفحات */
+        .interlocking-rings-box {
+            width: 130px;
+            height: 85px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: softFloat 4s ease-in-out infinite alternate;
+        }
+
+        .names-en {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            color: var(--text-dark);
+            letter-spacing: 5px;
+            font-weight: 400;
+            margin: 15px 0 10px 0;
+        }
+
+        .date-en {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            color: rgba(58, 51, 42, 0.45);
+        }
+
+        .title-calligraphy {
+            font-family: 'Amiri', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            font-style: italic;
+            color: var(--antique-gold);
+            margin-bottom: 10px;
+        }
+
+        .paragraph-text {
+            font-size: 1.05rem;
+            line-height: 2.2;
+            font-weight: 300;
+            color: var(--text-dark);
+            max-width: 290px;
+            margin-bottom: 20px;
+            font-family: 'Amiri', serif;
+        }
+
+        .names-ar-box {
+            font-family: 'Amiri', serif;
+            font-size: 2.4rem;
+            color: var(--text-dark);
+            position: relative;
+        }
+        .names-ar-box::after {
+            content: '❦';
+            position: absolute;
+            bottom: -22px;
+            left: 0; right: 0;
+            font-size: 1rem;
+            color: var(--antique-gold);
+            text-align: center;
+        }
+
+        .details-frame-box {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 320px;
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 1px double rgba(197, 168, 128, 0.4);
+            border-bottom: 1px double rgba(197, 168, 128, 0.4);
+        }
+
+        .grid-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .svg-icon-drawn {
+            width: 26px;
+            height: 26px;
+            margin-bottom: 8px;
+        }
+
+        .node-lbl {
+            font-size: 0.75rem;
+            color: rgba(58, 51, 42, 0.55);
+            margin-bottom: 4px;
+        }
+
+        .node-val {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-dark);
+        }
+
+        .blessing-footer {
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            color: var(--antique-gold);
+            margin-top: 15px;
+        }
+
+        @keyframes softFloat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-6px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-stage">
+        
+        <div class="victorian-frame">
+            <div class="victorian-corner bottom-left"></div>
+            <div class="victorian-corner bottom-right"></div>
+        </div>
+
+        <!-- الشعار الخلفي المائي الكبير المصحح بطريقة رسم الصورة الثالثة -->
+        <svg class="business-logo-watermark" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M110,35 C113,50 106,75 99,98 C91,125 90,148 83,168 C96,145 111,118 114,92 C116,66 109,45 110,35 Z" fill="#c5a880"/>
+            <path d="M113,44 C123,62 127,90 121,118 C116,140 102,158 91,168" stroke="#c5a880" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M93,56 C91.5,52 88,50 85,54 C82,58 84,62 87,60 C90.5,58 94.5,60 93,56 Z" fill="#c5a880"/>
+            <path d="M90.5,76 C86.5,70.5 78.5,76 78.5,82.5 C78.5,89 84.5,91 89,86.5 C92,83.5 93,79.5 90.5,76 Z" fill="#c5a880"/>
+        </svg>
+
+        <!-- المشهد الأول -->
+        <div class="scene active" id="view1">
+            <div class="interlocking-rings-box">
+                <svg viewBox="0 0 160 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="65" cy="48" rx="28" ry="18" stroke="#c5a880" stroke-width="2" fill="none" transform="rotate(-15 65 48)" />
+                    <ellipse cx="65" cy="51" rx="28" ry="18" stroke="#c5a880" stroke-width="1" fill="none" transform="rotate(-15 65 51)" opacity="0.6"/>
+                    <ellipse cx="95" cy="54" rx="30" ry="19" stroke="#c5a880" stroke-width="2.5" fill="none" transform="rotate(15 95 54)" />
+                    <ellipse cx="95" cy="57" rx="30" ry="19" stroke="#c5a880" stroke-width="1" fill="none" transform="rotate(15 95 57)" opacity="0.6"/>
+                    <path d="M118,48 C125,40 132,42 134,48 C136,54 126,58 132,50 C135,46 139,48 141,51" stroke="#c5a880" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="names-en">AHMED | SALMA</div>
+            <div class="date-en">15 . JULY . 2026</div>
+        </div>
+
+        <!-- المشهد الثاني: مضاف إليه رسمة الخواتم في الأعلى للتناسق -->
+        <div class="scene" id="view2">
+            <div class="interlocking-rings-box slide-up-anim" style="transform: scale(0.85); margin-bottom: 5px;">
+                <svg viewBox="0 0 160 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="65" cy="48" rx="28" ry="18" stroke="#c5a880" stroke-width="2" fill="none" transform="rotate(-15 65 48)" />
+                    <ellipse cx="65" cy="51" rx="28" ry="18" stroke="#c5a880" stroke-width="1" fill="none" transform="rotate(-15 65 51)" opacity="0.6"/>
+                    <ellipse cx="95" cy="54" rx="30" ry="19" stroke="#c5a880" stroke-width="2.5" fill="none" transform="rotate(15 95 54)" />
+                    <ellipse cx="95" cy="57" rx="30" ry="19" stroke="#c5a880" stroke-width="1" fill="none" transform="rotate(15 95 57)" opacity="0.6"/>
+                    <path d="M118,48 C125,40 132,42 134,48 C136,54 126,58 132,50 C135,46 139,48 141,51" stroke="#c5a880" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="title-calligraphy slide-up-anim">نعم قبلت</div>
+            <div class="paragraph-text slide-up-anim delay-1">
+                تلاقت الروح بالروح، والقلب بالقلب، بفضل من الله تم زفافي وعقد قراني على من اختاره الله شريكاً لعمري.
+            </div>
+            <div class="names-ar-box slide-up-anim delay-2">احمد & سلمى</div>
+        </div>
+
+        <!-- المشهد الثالث: مضاف إليه رسمة الخواتم في الأعلى بدلاً من العبارات السابقة للتوافق مع الصورة 1000001130_3.jpg -->
+        <div class="scene" id="view3">
+            <div class="interlocking-rings-box slide-up-anim" style="transform: scale(0.85); margin-bottom: 0px;">
+                <svg viewBox="0 0 160 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="65" cy="48" rx="28" ry="18" stroke="#c5a880" stroke-width="2" fill="none" transform="rotate(-15 65 48)" />
+                    <ellipse cx="65" cy="51" rx="28" ry="18" stroke="#c5a880" stroke-width="1" fill="none" transform="rotate(-15 65 51)" opacity="0.6"/>
+                    <ellipse cx="95" cy="54" rx="30" ry="19" stroke="#c5a880" stroke-width="2.5" fill="none" transform="rotate(15 95 54)" />
+                    <ellipse cx="95" cy="57" rx="30" ry="19" stroke="#c5a880" stroke-width="1" fill="none" transform="rotate(15 95 57)" opacity="0.6"/>
+                    <path d="M118,48 C125,40 132,42 134,48 C136,54 126,58 132,50 C135,46 139,48 141,51" stroke="#c5a880" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            
+            <p class="slide-up-anim delay-1" style="letter-spacing: 0.5px; font-size: 0.8rem; color: rgba(58,51,42,0.5); margin: 5px 0 0 0;">بكل مشاعر الحب والود نتشرف بدعوتكم لحضور حفل</p>
+            <div class="title-calligraphy slide-up-anim delay-1" style="font-size: 2.6rem; margin: 5px 0;">زفافنا</div>
+            <p class="slide-up-anim delay-1" style="font-size: 0.95rem; margin-bottom: 0px; font-family: 'Amiri', serif;">وذلك بمشيئة الله تعالى يوم الاربعاء</p>
+
+            <div class="details-frame-box slide-up-anim delay-2">
+                <!-- الاستقبال -->
+                <div class="grid-node">
+                    <svg class="svg-icon-drawn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5,4 h12 v12 h-12 Z" stroke="#c5a880" stroke-width="1.5"/>
+                        <path d="M5,4 C3.5,4 3.5,7 5,7 h12 C18.5,7 18.5,4 17,4" stroke="#c5a880" stroke-width="1.5"/>
+                        <path d="M5,16 C3.5,16 3.5,19 5,19 h12 C18.5,19 18.5,16 17,16" stroke="#c5a880" stroke-width="1.5"/>
+                        <line x1="8" y1="10" x2="14" y2="10" stroke="#c5a880" stroke-width="1.2"/>
+                        <line x1="8" y1="13" x2="12" y2="13" stroke="#c5a880" stroke-width="1.2"/>
+                    </svg>
+                    <span class="node-lbl">الاستقبال</span>
+                    <span class="node-val">AM 11:00</span>
+                </div>
+
+                <!-- التاريخ -->
+                <div class="grid-node">
+                    <svg class="svg-icon-drawn" viewBox="0 0 24 24" fill="#c5a880" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12,2 C12,6 10,9 8,11 C7,12 6,13 6,15 C6,17 7.5,18 9,18 C11,18 11.5,16 12,14 C12.5,16 13,18 15,18 C16.5,18 18,17 18,15 C18,13 17,12 16,11 C14,9 12,6 12,2 Z"/>
+                        <path d="M4,13 C5,13 6.5,14 6.5,16 C6.5,18 5,19 3,18 C4.5,16.5 4,14 4,13 Z"/>
+                        <path d="M20,13 C19,13 17.5,14 17.5,16 C17.5,18 19,19 21,18 C19.5,16.5 20,14 20,13 Z"/>
+                    </svg>
+                    <span class="node-lbl">التاريخ</span>
+                    <span class="node-val">15.7.2026</span>
+                </div>
+
+                <!-- المكان -->
+                <div class="grid-node">
+                    <svg class="svg-icon-drawn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="8" r="4.5" fill="#b33939" stroke="#962d2d" stroke-width="1"/>
+                        <line x1="12" y1="12.5" x2="12" y2="21" stroke="#718093" stroke-width="1.8" stroke-linecap="round"/>
+                        <ellipse cx="12" cy="21.5" rx="3.5" ry="1" fill="rgba(0,0,0,0.1)"/>
+                    </svg>
+                    <span class="node-lbl">المكان</span>
+                    <span class="node-val">قاعات الحفلات الكبرى</span>
+                </div>
+            </div>
+
+            <div class="blessing-footer slide-up-anim delay-2">بحضوركم يتم لنا الفرح والسرور</div>
+        </div>
+
+    </div>
+
+    <script>
+        const views = [
+            document.getElementById('view1'), 
+            document.getElementById('view2'), 
+            document.getElementById('view3')
+        ];
+        let activeIndex = 0;
+
+        function runVideoTimeline() {
+            if (activeIndex === views.length - 1) {
+                clearInterval(timelineInterval);
+                return;
+            }
+
+            views[activeIndex].classList.remove('active');
+            activeIndex++;
+            views[activeIndex].classList.add('active');
+        }
+
+        // سرعة التمرير المضبوطة (4 ثوانٍ) بكل مرونة ونعومة
+        const timelineInterval = setInterval(runVideoTimeline, 4000);
+    </script>
+
+</body>
+</html>
