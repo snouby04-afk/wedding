@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف كلاسيكية معدلة بالكامل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #f2f2f2;
+            --molding-light: #ffffff;
+            --molding-shadow: #dfdfdf;
+            --text-grey: #666666;
+            --text-dark: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .video-stage {
+            position: relative;
+            width: 100%;
+            max-width: 415px;
+            height: 100vh;
+            background-color: var(--bg-color);
+            box-shadow: 0 0 40px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
+
+        /* حاوية اللوغو الخلفي */
+        .background-logo-watermark {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 260px;
+            height: 460px;
+            opacity: 0.08; 
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* الجبس الحائطي الفخم */
+        .classic-wall-molding {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: 24px solid var(--bg-color);
+            box-shadow: inset 4px 4px 10px var(--molding-shadow), 
+                        inset -4px -4px 10px var(--molding-light);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .molding-inner-panel {
+            position: absolute;
+            top: 25px; left: 25px; right: 25px; bottom: 25px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .pages-viewport {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 3;
+        }
+
+        .scene-slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            padding: 45px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+        }
+
+        .scene-slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .drop-item {
+            opacity: 0;
+            transform: translateY(-40px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .scene-slide.active .drop-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* الصفحة الأولى */
+        .wreath-frame-svg {
+            width: 190px;
+            height: 190px;
+            margin-top: 50px;
+        }
+
+        .poetic-typography {
+            font-family: 'Amiri', serif;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-top: 35px;
+            text-align: center;
+            line-height: 1.8;
+            width: 100%;
+        }
+
+        .groom-bride-names {
+            font-family: 'Amiri', serif;
+            font-size: 1.05rem;
+            letter-spacing: 3px;
+            color: var(--text-grey);
+            margin-top: 15px;
+        }
+
+        /* الصفحة الثانية */
+        .long-prose-container {
+            margin-top: 35px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .prose-paragraph {
+            font-family: 'Amiri', serif;
+            font-size: 1.15rem;
+            color: var(--text-grey);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .wedding-title-container {
+            position: relative;
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100px;
+        }
+
+        .wedding-main-text {
+            font-family: 'Amiri', serif;
+            font-size: 2.4rem;
+            color: var(--text-dark);
+            z-index: 2;
+            font-weight: normal;
+        }
+
+        /* التايم لاين */
+        .tree-timeline-container {
+            position: relative;
+            width: 100%;
+            max-width: 260px; 
+            height: 200px;
+            margin-top: 25px;
+        }
+
+        .tree-timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%; top: 0; width: 1.5px; height: 95%;
+            background-color: #b5b5b5;
+        }
+
+        .tree-branch {
+            position: absolute;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            height: 40px;
+        }
+
+        .branch-right { left: 50%; padding-left: 12px; justify-content: flex-start; }
+        .branch-right::before { content: ''; position: absolute; left: 0; top: 50%; width: 12px; height: 1.5px; background-color: #b5b5b5; }
+
+        /* الأغصان اليسرى متطابقة تماماً الآن */
+        .branch-left { right: 50%; padding-right: 12px; justify-content: flex-end; text-align: left; }
+        .branch-left::before { content: ''; position: absolute; right: 0; top: 50%; width: 12px; height: 1.5px; background-color: #b5b5b5; }
+
+        /* تعديل ذكي لحجم الخط للفرع الأخير ليتناسب مع المساحة المتاحة قبل الخيط */
+        .last-kids-text {
+            font-size: 0.76rem !important; 
+        }
+
+        .tree-node-dot {
+            position: absolute;
+            width: 10px; height: 10px;
+            background-color: var(--bg-color);
+            border: 2px solid #888888;
+            border-radius: 50%;
+            z-index: 5;
+        }
+        .branch-right .tree-node-dot { left: -5px; top: calc(50% - 5px); }
+        .branch-left .tree-node-dot { right: -5px; top: calc(50% - 5px); }
+
+        .pos-1 { top: 0px; }
+        .pos-2 { top: 50px; }
+        .pos-3 { top: 100px; }
+        .pos-4 { top: 150px; }
+
+        .branch-content {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            white-space: nowrap;
+        }
+        .branch-left .branch-content { flex-direction: row-reverse; }
+
+        .svg-icon {
+            width: 16px; height: 16px;
+            fill: none; stroke: #666666; stroke-width: 1.8;
+            flex-shrink: 0; /* يمنع انضغاط الأيقونة */
+        }
+
+        .bride-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40vh;
+            background-color: transparent;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-stage">
+        <!-- اللوغو المصحح والمطابق تماماً لانحناءات الخط العربي والقرون الجانبية المائلة -->
+        <div class="background-logo-watermark">
+            <svg viewBox="0 0 100 150" style="width: 100%; height: 100%;">
+                <path d="M39.1,133 C44,124 50,103.5 48.2,80.5 C46.5,57.5 37.8,38.5 48.5,23 C41.2,42 41,68 44,92 C47,116 43,127.5 39.1,133 Z" fill="#9c8c7c"/>
+                <path d="M49.8,32.5 C50.8,40 55.5,63 58,82 C60.2,99 57.5,114 43,128" fill="none" stroke="#9c8c7c" stroke-width="0.75" stroke-linecap="round"/>
+                <path d="M39.5,41.2 C38.5,40.2 36.5,42.5 35.8,44.5 C35,46.8 36.2,48 37.5,47 C39.2,45.8 40.2,42.2 39.5,41.2 Z" fill="#9c8c7c"/>
+                <path d="M41.8,61 C40.2,59 36.5,62.2 36,65.5 C35.2,69.5 38.5,72 41.5,69.5 C44,67.5 43,62.5 41.8,61 Z" fill="#9c8c7c"/>
+            </svg>
+        </div>
+
+        <!-- الإطار الجبسي -->
+        <div class="classic-wall-molding">
+            <div class="molding-inner-panel"></div>
+        </div>
+
+        <div class="pages-viewport">
+            
+            <!-- الصفحة الأولى -->
+            <div class="scene-slide active" id="scene1">
+                <div class="wreath-frame-svg drop-item" id="frame1">
+                    <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
+                        <circle cx="100" cy="100" r="84" fill="none" stroke="#dcdcdc" stroke-width="1.5"/>
+                        <g fill="#ffffff" stroke="#cccccc" stroke-width="0.8">
+                            <circle cx="100" cy="16" r="9" /><circle cx="160" cy="45" r="9" />
+                            <circle cx="184" cy="100" r="9" /><circle cx="160" cy="155" r="9" />
+                            <circle cx="100" cy="184" r="9" /><circle cx="40" cy="155" r="9" />
+                            <circle cx="16" cy="100" r="9" /><circle cx="40" cy="45" r="9" />
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="poetic-typography">
+                    <p class="drop-item" id="text1_1">لحظات الفرح اختارت من عمري موعداً</p>
+                    <div class="groom-bride-names drop-item" id="text1_2">TAREK | MANAR</div>
+                </div>
+
+                <div class="bride-container"></div>
+            </div>
+
+            <!-- الصفحة الثانية -->
+            <div class="scene-slide" id="scene2">
+                <div class="long-prose-container">
+                    <p class="drop-item" id="text2_1" class="prose-paragraph">في محضر الحُب أريدكم حـــــــولي<br>صحبة العمر أحباب الــــــــــــــــروح</p>
+                    <p class="drop-item" id="text2_2" class="prose-paragraph">لأنني أمضي نــــحو حياة جــــــــديدة<br>تمنى أن تكونوا بقربي لتكتمل فــــــــرحتي</p>
+                    <p class="drop-item" id="text2_3" style="font-size: 0.95rem; color: #888; margin-bottom:10px;">يسرني ويشرفني دعوتكم لحضــــــــــــــــور</p>
+                </div>
+
+                <div class="wedding-title-container drop-item" id="text2_4">
+                    <h1 class="wedding-main-text">حفل زفافي</h1>
+                </div>
+
+                <div class="bride-container"></div>
+            </div>
+
+            <!-- الصفحة الثالثة -->
+            <div class="scene-slide" id="scene3">
+                <div class="poetic-typography" style="margin-top: 15px; margin-bottom: 5px;">
+                    <p class="drop-item" id="text3_1" style="font-size: 1.2rem; color: #666;">ذلك بمشيئة الله تعالى</p>
+                    <p class="drop-item" id="text3_2" style="font-weight: 600; font-size: 1.4rem; color: var(--text-dark); margin-top: 2px;">يوم الاحد</p>
+                </div>
+
+                <div class="tree-timeline-container">
+                    <div class="tree-branch branch-right pos-1 drop-item" id="tree_1">
+                        <div class="tree-node-dot"></div>
+                        <div class="branch-content">
+                            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                            <span style="color: var(--text-grey); font-weight: 600;">2026 . 07 . 05</span>
+                        </div>
+                    </div>
+
+                    <!-- فرع قاعة ضحى القياسي الناجح -->
+                    <div class="tree-branch branch-left pos-2 drop-item" id="tree_2">
+                        <div class="tree-node-dot"></div>
+                        <div class="branch-content">
+                            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                            <span><b>قاعة حفلات الكبرى</b> <span style="font-size: 0.75rem; color:#777;"><br>(بالجزائر)</span></span>
+                        </div>
+                    </div>
+
+                    <div class="tree-branch branch-right pos-3 drop-item" id="tree_3">
+                        <div class="tree-node-dot"></div>
+                        <div class="branch-content">
+                            <svg class="svg-icon" viewBox="0 0 24 24" stroke="#c0392b"><circle cx="12" cy="12" r="10" /><line x1="4.93" y1="4.93" x2="19.07" y2="19.07" /></svg>
+                            <span>ممنوع التصوير</span>
+                        </div>
+                    </div>
+
+                    <!-- تم الإصلاح الكامل ومطابقتها تماماً مع قاعة ضحى مع تظبيط حجم الكلمات المكتوبة -->
+                    <div class="tree-branch branch-left pos-4 drop-item" id="tree_4">
+                        <div class="tree-node-dot"></div>
+                        <div class="branch-content last-kids-text">
+                            <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M8 15s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3" /><line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3" /></svg>
+                            <span>جنة الأطفال بيوتهم</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bride-container"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // تتابع حركات الصفحة الأولى
+            setTimeout(() => document.getElementById('frame1').classList.add('show'), 200);
+            setTimeout(() => document.getElementById('text1_1').classList.add('show'), 1400);
+            setTimeout(() => document.getElementById('text1_2').classList.add('show'), 2500);
+
+            // الانتقال التلقائي للصفحة الثانية
+            setTimeout(() => {
+                document.getElementById('scene1').classList.remove('active');
+                document.getElementById('scene2').classList.add('active');
+                
+                setTimeout(() => document.getElementById('text2_1').classList.add('show'), 200);
+                setTimeout(() => document.getElementById('text2_2').classList.add('show'), 1400);
+                setTimeout(() => document.getElementById('text2_3').classList.add('show'), 2500);
+                setTimeout(() => document.getElementById('text2_4').classList.add('show'), 3600);
+            }, 7000);
+
+            // الانتقال التلقائي للصفحة الثالثة
+            setTimeout(() => {
+                document.getElementById('scene2').classList.remove('active');
+                document.getElementById('scene3').classList.add('active');
+                
+                setTimeout(() => document.getElementById('text3_1').classList.add('show'), 200);
+                setTimeout(() => document.getElementById('text3_2').classList.add('show'), 1100);
+                setTimeout(() => document.getElementById('tree_1').classList.add('show'), 2000);
+                setTimeout(() => document.getElementById('tree_2').classList.add('show'), 2900);
+                setTimeout(() => document.getElementById('tree_3').classList.add('show'), 3800);
+                setTimeout(() => document.getElementById('tree_4').classList.add('show'), 4700);
+            }, 14500);
+        });
+    </script>
+</body>
+</html>
