@@ -81,7 +81,7 @@
         .scene-slide {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            padding: 45px 25px;
+            padding: 45px 35px; /* زيادة الهامش الجانبي لحماية النصوص */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -106,7 +106,7 @@
             transform: translateY(0);
         }
 
-        /* الصفحة الأولى */
+        /* الصفحة الأولى المعدلة لتجنب ملامسة الإطار */
         .wreath-frame-svg {
             width: 190px;
             height: 190px;
@@ -115,18 +115,19 @@
 
         .poetic-typography {
             font-family: 'Amiri', serif;
-            font-size: 1.3rem;
+            font-size: 1.15rem; /* تصغير طفيف جداً ليتناسب مع الهاتف */
             color: var(--text-dark);
             margin-top: 35px;
             text-align: center;
             line-height: 1.8;
             width: 100%;
+            padding: 0 10px; /* مسافة أمان إضافية */
         }
 
         .groom-bride-names {
             font-family: 'Amiri', serif;
-            font-size: 1.05rem;
-            letter-spacing: 3px;
+            font-size: 1rem;
+            letter-spacing: 2px;
             color: var(--text-grey);
             margin-top: 15px;
         }
@@ -140,7 +141,7 @@
 
         .prose-paragraph {
             font-family: 'Amiri', serif;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: var(--text-grey);
             margin-bottom: 20px;
             line-height: 1.6;
@@ -158,18 +159,18 @@
 
         .wedding-main-text {
             font-family: 'Amiri', serif;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             color: var(--text-dark);
             z-index: 2;
             font-weight: normal;
         }
 
-        /* التايم لاين */
+        /* حاوية التايم لاين المحمية */
         .tree-timeline-container {
             position: relative;
             width: 100%;
-            max-width: 260px; 
-            height: 200px;
+            max-width: 250px; 
+            height: 220px;
             margin-top: 25px;
         }
 
@@ -185,20 +186,14 @@
             width: 50%;
             display: flex;
             align-items: center;
-            height: 40px;
+            height: 45px;
         }
 
-        .branch-right { left: 50%; padding-left: 12px; justify-content: flex-start; }
-        .branch-right::before { content: ''; position: absolute; left: 0; top: 50%; width: 12px; height: 1.5px; background-color: #b5b5b5; }
+        .branch-right { left: 50%; padding-left: 10px; justify-content: flex-start; }
+        .branch-right::before { content: ''; position: absolute; left: 0; top: 50%; width: 10px; height: 1.5px; background-color: #b5b5b5; }
 
-        /* الأغصان اليسرى متطابقة تماماً الآن */
-        .branch-left { right: 50%; padding-right: 12px; justify-content: flex-end; text-align: left; }
-        .branch-left::before { content: ''; position: absolute; right: 0; top: 50%; width: 12px; height: 1.5px; background-color: #b5b5b5; }
-
-        /* تعديل ذكي لحجم الخط للفرع الأخير ليتناسب مع المساحة المتاحة قبل الخيط */
-        .last-kids-text {
-            font-size: 0.76rem !important; 
-        }
+        .branch-left { right: 50%; padding-right: 10px; justify-content: flex-end; text-align: left; }
+        .branch-left::before { content: ''; position: absolute; right: 0; top: 50%; width: 10px; height: 1.5px; background-color: #b5b5b5; }
 
         .tree-node-dot {
             position: absolute;
@@ -212,24 +207,29 @@
         .branch-left .tree-node-dot { right: -5px; top: calc(50% - 5px); }
 
         .pos-1 { top: 0px; }
-        .pos-2 { top: 50px; }
-        .pos-3 { top: 100px; }
-        .pos-4 { top: 150px; }
+        .pos-2 { top: 55px; }
+        .pos-3 { top: 110px; }
+        .pos-4 { top: 165px; }
 
+        /* حل مشكلة الاصطدام بالإطار عن طريق السماح بالنص بالالتفاف وتحديد مساحته */
         .branch-content {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: var(--text-dark);
-            white-space: nowrap;
+            white-space: normal; /* يسمح بنزول الكلمات الزائدة تحت بعضها بسلاسة */
+            max-width: 110px; /* يحجز مسافة مستحيل يتجاوزها النص لكي لا يقترب من الإطار */
+            line-height: 1.3;
         }
-        .branch-left .branch-content { flex-direction: row-reverse; }
+        
+        .branch-right .branch-content { text-align: right; }
+        .branch-left .branch-content { flex-direction: row-reverse; text-align: left; }
 
         .svg-icon {
-            width: 16px; height: 16px;
+            width: 14px; height: 14px;
             fill: none; stroke: #666666; stroke-width: 1.8;
-            flex-shrink: 0; /* يمنع انضغاط الأيقونة */
+            flex-shrink: 0;
         }
 
         .bride-container {
@@ -246,7 +246,6 @@
 <body>
 
     <div class="video-stage">
-        <!-- اللوغو المصحح والمطابق تماماً لانحناءات الخط العربي والقرون الجانبية المائلة -->
         <div class="background-logo-watermark">
             <svg viewBox="0 0 100 150" style="width: 100%; height: 100%;">
                 <path d="M39.1,133 C44,124 50,103.5 48.2,80.5 C46.5,57.5 37.8,38.5 48.5,23 C41.2,42 41,68 44,92 C47,116 43,127.5 39.1,133 Z" fill="#9c8c7c"/>
@@ -256,14 +255,12 @@
             </svg>
         </div>
 
-        <!-- الإطار الجبسي -->
         <div class="classic-wall-molding">
             <div class="molding-inner-panel"></div>
         </div>
 
         <div class="pages-viewport">
             
-            <!-- الصفحة الأولى -->
             <div class="scene-slide active" id="scene1">
                 <div class="wreath-frame-svg drop-item" id="frame1">
                     <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
@@ -285,11 +282,10 @@
                 <div class="bride-container"></div>
             </div>
 
-            <!-- الصفحة الثانية -->
             <div class="scene-slide" id="scene2">
                 <div class="long-prose-container">
                     <p class="drop-item" id="text2_1" class="prose-paragraph">في محضر الحُب أريدكم حـــــــولي<br>صحبة العمر أحباب الــــــــــــــــروح</p>
-                    <p class="drop-item" id="text2_2" class="prose-paragraph">لأنني أمضي نــــحو حياة جــــــــديدة<br>تمنى أن تكونوا بقربي لتكتمل فــــــــرحتي</p>
+                    <p class="drop-item" id="text2_2" class="prose-paragraph">لأنني أمضي نــــحو حياة جــــــــديدة<br>تمنى أن تكونوا بقربي لتكتمل فــــــرحتي</p>
                     <p class="drop-item" id="text2_3" style="font-size: 0.95rem; color: #888; margin-bottom:10px;">يسرني ويشرفني دعوتكم لحضــــــــــــــــور</p>
                 </div>
 
@@ -300,11 +296,10 @@
                 <div class="bride-container"></div>
             </div>
 
-            <!-- الصفحة الثالثة -->
             <div class="scene-slide" id="scene3">
                 <div class="poetic-typography" style="margin-top: 15px; margin-bottom: 5px;">
-                    <p class="drop-item" id="text3_1" style="font-size: 1.2rem; color: #666;">ذلك بمشيئة الله تعالى</p>
-                    <p class="drop-item" id="text3_2" style="font-weight: 600; font-size: 1.4rem; color: var(--text-dark); margin-top: 2px;">يوم الاحد</p>
+                    <p class="drop-item" id="text3_1" style="font-size: 1.1rem; color: #666;">ذلك بمشيئة الله تعالى</p>
+                    <p class="drop-item" id="text3_2" style="font-weight: 600; font-size: 1.3rem; color: var(--text-dark); margin-top: 2px;">يوم الاربعاء</p>
                 </div>
 
                 <div class="tree-timeline-container">
@@ -312,16 +307,15 @@
                         <div class="tree-node-dot"></div>
                         <div class="branch-content">
                             <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
-                            <span style="color: var(--text-grey); font-weight: 600;">2026 . 07 . 05</span>
+                            <span style="color: var(--text-grey); font-weight: 600;">05.07.2026</span>
                         </div>
                     </div>
 
-                    <!-- فرع قاعة ضحى القياسي الناجح -->
                     <div class="tree-branch branch-left pos-2 drop-item" id="tree_2">
                         <div class="tree-node-dot"></div>
                         <div class="branch-content">
                             <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                            <span><b>قاعة حفلات الكبرى</b> <span style="font-size: 0.75rem; color:#777;"><br>(بالجزائر)</span></span>
+                            <span><b>قاعة حفلات الكبرى</b> <span style="font-size: 0.68rem; color:#777;"><br>(بالجزائر)</span></span>
                         </div>
                     </div>
 
@@ -333,10 +327,9 @@
                         </div>
                     </div>
 
-                    <!-- تم الإصلاح الكامل ومطابقتها تماماً مع قاعة ضحى مع تظبيط حجم الكلمات المكتوبة -->
                     <div class="tree-branch branch-left pos-4 drop-item" id="tree_4">
                         <div class="tree-node-dot"></div>
-                        <div class="branch-content last-kids-text">
+                        <div class="branch-content">
                             <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M8 15s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3" /><line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3" /></svg>
                             <span>جنة الأطفال بيوتهم</span>
                         </div>
